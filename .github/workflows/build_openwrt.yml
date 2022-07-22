@@ -20,7 +20,6 @@ jobs:
         run: |
           git submodule update --recursive --remote
           cp -r package/* lede/package/
-          cp -v ./x86.config lede/.config
 
       - name: install depends
         run: |
@@ -37,6 +36,7 @@ jobs:
           cd lede
           ./scripts/feeds update -a
           ./scripts/feeds install -a
+          cp -v ../x86.config .config
           make defconfig
           make -j24
 
