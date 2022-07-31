@@ -4,10 +4,6 @@
 [submodule "luci-app-alist"]
 	path = package/luci-app-alist
 	url = https://github.com/sbwml/luci-app-alist.git
-[submodule "luci-app-openclash"]
-	path = package/luci-app-openclash
-	url = https://github.com/vernesong/OpenClash.git
 [submodule "openwrt"]
 	path = openwrt
 	url = https://github.com/openwrt/openwrt.git
-	branch = openwrt-22.03

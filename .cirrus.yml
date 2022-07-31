@@ -15,18 +15,22 @@ task:
     df -h .
     printenv
 
-  update_submodules_script: |
-    apt update -y
-    DEBIAN_FRONTEND=noninteractive apt install -y git
-    git submodule update --recursive --remote --init
-
-
   install_depends_script: |
-    DEBIAN_FRONTEND=noninteractive apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pip libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev sudo
+    apt update -y
+    DEBIAN_FRONTEND=noninteractive apt install -y git ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pip libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev sudo
 
-  prepare_packages_script: |
+  update_submodules_script: |
+    git submodule update --recursive --remote --init
+    if [[ x"$distro" == x"openwrt" ]]; then
+      pushd openwrt
+      git checkout v21.02.3
+      popd
+    fi
+    git clone https://github.com/vernesong/OpenClash.git --depth=1 package/luci-app-openclash
     ls package/ | xargs -i sh -c 'ln -sfv $(realpath package/{}) ${distro}/package/'
     ls -lh ${distro}/package/
+
+  prepare_packages_script: |
     # install po2lmo for openclash
     pushd package/luci-app-openclash/luci-app-openclash/tools/po2lmo
     make && sudo make install
@@ -36,6 +40,12 @@ task:
     pushd ${distro}
     ./scripts/feeds update -a
     ./scripts/feeds install -a
+    if [[ x"$distro" == x"openwrt" ]]; then
+      # alist required goalng 1.18.x
+      # https://github.com/sbwml/luci-app-alist/issues/10
+      rm -rf feeds/packages/lang/golang
+      svn export https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages/lang/golang
+    fi
     cp -v ../x86_${distro}.config .config
     make defconfig
     popd
