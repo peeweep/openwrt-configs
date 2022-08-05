@@ -22,8 +22,6 @@ task:
   update_submodules_script: |
     git submodule update --recursive --remote --init
     if [[ x"$distro" == x"openwrt" ]]; then
-      # add ddns-scripts_dnspod
-      svn export https://github.com/coolsnowwolf/lede/branches/master/package/lean/ddns-scripts_dnspod package/ddns-scripts_dnspod
       # checkout openwrt tag
       pushd openwrt
       git checkout v21.02.3
