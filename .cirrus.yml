@@ -8,7 +8,6 @@ compute_engine_instance:
 task:
   env:
     matrix:
-      - distro: lede
       - distro: openwrt
 
   check_buildenv_script: |
@@ -40,11 +39,12 @@ task:
 
   mkconfig_script: |
     pushd ${distro}
+    echo "src-git PWpackages https://github.com/xiaorouji/openwrt-passwall.git;packages" >> feeds.conf.default
+    echo "src-git PWluci https://github.com/xiaorouji/openwrt-passwall.git;luci" >> feeds.conf.default
     ./scripts/feeds update -a
     ./scripts/feeds install -a
     if [[ x"$distro" == x"openwrt" ]]; then
       # alist required goalng 1.19
-      # https://github.com/sbwml/luci-app-alist/commit/eccad234665ab69b68ed96fe321f73dc51b23888
       rm -rf feeds/packages/lang/golang
       svn export https://github.com/sbwml/packages_lang_golang/branches/19.x feeds/packages/lang/golang
     fi
