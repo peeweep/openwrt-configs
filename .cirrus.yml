@@ -60,4 +60,4 @@ task:
     popd
 
   images_artifacts:
-    path: "*/bin/targets/x86/64/openwrt*.gz"
+    path: "*/bin/targets/x86/64/openwrt-x86-64-generic-ext4*.gz"
