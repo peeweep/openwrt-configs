@@ -1,12 +1,6 @@
 [submodule "lede"]
 	path = lede
 	url = https://github.com/coolsnowwolf/lede.git
-[submodule "luci-app-alist"]
-	path = package/luci-app-alist
-	url = https://github.com/sbwml/luci-app-alist.git
 [submodule "openwrt"]
 	path = openwrt
 	url = https://github.com/openwrt/openwrt.git
-[submodule "package/luci-app-aliddns"]
-	path = package/luci-app-aliddns
-	url = https://github.com/honwen/luci-app-aliddns.git
