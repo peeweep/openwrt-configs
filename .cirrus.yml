@@ -45,8 +45,6 @@ task:
       # alist required goalng 1.19
       rm -rf feeds/packages/lang/golang
       svn export https://github.com/sbwml/packages_lang_golang/branches/19.x feeds/packages/lang/golang
-      # linux 5.4 required kmod-r8125
-      svn export https://github.com/csrutil/OpenWrt-NIC-Drivers/branches/main/drivers/r8125 package/kmod-r8125
     fi
     cp -v ../x86_${distro}.config .config
     make defconfig
