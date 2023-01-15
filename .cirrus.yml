@@ -8,7 +8,8 @@ compute_engine_instance:
 task:
   env:
     matrix:
-      - distro: openwrt
+      - distro: openwrt-21.02
+      - distro: openwrt-22.03
 
   check_buildenv_script: |
     df -h .
@@ -21,10 +22,15 @@ task:
 
   update_submodules_script: |
     git submodule update --recursive --remote --init
-    if [[ x"$distro" == x"openwrt" ]]; then
+    if [[ x"$distro" == x"openwrt-21.02" ]]; then
       # checkout openwrt tag
-      pushd openwrt
+      pushd openwrt-21.02
       git checkout v21.02.5
+      popd
+    elif [[ x"$distro" == x"openwrt-22.03" ]]; then
+      # checkout openwrt tag
+      pushd openwrt-22.03
+      git checkout v22.03.3
       popd
     fi
     git clone https://github.com/vernesong/OpenClash.git --depth=1 package/luci-app-openclash
@@ -41,11 +47,6 @@ task:
     pushd ${distro}
     ./scripts/feeds update -a
     ./scripts/feeds install -a
-    if [[ x"$distro" == x"openwrt" ]]; then
-      # alist required goalng 1.19
-      rm -rf feeds/packages/lang/golang
-      svn export https://github.com/sbwml/packages_lang_golang/branches/19.x feeds/packages/lang/golang
-    fi
     cp -v ../x86_${distro}.config .config
     make defconfig
     popd
