@@ -8,7 +8,6 @@ compute_engine_instance:
 task:
   env:
     matrix:
-      - distro: openwrt-21.02
       - distro: openwrt-22.03
 
   check_buildenv_script: |
