@@ -29,7 +29,7 @@ task:
     elif [[ x"$distro" == x"openwrt-22.03" ]]; then
       # checkout openwrt tag
       pushd openwrt-22.03
-      git checkout v22.03.4
+      git checkout v22.03.5
       popd
     fi
     git clone https://github.com/vernesong/OpenClash.git --depth=1 package/luci-app-openclash
