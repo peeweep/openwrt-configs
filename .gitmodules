@@ -4,3 +4,6 @@
 [submodule "openwrt-22.03"]
 	path = openwrt-22.03
 	url = https://github.com/openwrt/openwrt
+[submodule "openwrt-23.05"]
+	path = openwrt-23.05
+	url = https://github.com/openwrt/openwrt

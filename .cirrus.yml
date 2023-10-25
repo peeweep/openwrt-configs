@@ -21,10 +21,10 @@ task:
 
   update_submodules_script: |
     git submodule update --recursive --remote --init
-    if [[ x"$distro" == x"openwrt-21.02" ]]; then
+    if [[ x"$distro" == x"openwrt-23.05" ]]; then
       # checkout openwrt tag
-      pushd openwrt-21.02
-      git checkout v21.02.5
+      pushd openwrt-23.05
+      git checkout v23.05.0
       popd
     elif [[ x"$distro" == x"openwrt-22.03" ]]; then
       # checkout openwrt tag
